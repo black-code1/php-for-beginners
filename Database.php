@@ -13,12 +13,12 @@ class Database
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
         ]);
     }
-    public function query($query)
+    public function query($query, $params = [])
     {
         // prepare query statement to send to mysql
         $statement = $this->connection->prepare($query);
         // said to mysql to execute || mysql execute that query
-        $statement->execute();
+        $statement->execute($params);
 
         // we fetch all of the results
         return $statement;
