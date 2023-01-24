@@ -4,6 +4,8 @@ class Database
 {
     public $connection;
 
+    public $statement;
+
     public function __construct($config, $username = 'root', $password = 'root')
     {
         // connect to our MySQL database.
@@ -16,11 +18,31 @@ class Database
     public function query($query, $params = [])
     {
         // prepare query statement to send to mysql
-        $statement = $this->connection->prepare($query);
+        $this->statement = $this->connection->prepare($query);
         // said to mysql to execute || mysql execute that query
-        $statement->execute($params);
+        $this->statement->execute($params);
 
         // we fetch all of the results
-        return $statement;
+        return $this;
+    }
+
+    public function get() {
+        return $this->statement->fetchAll();
+    }
+
+    public function find()
+    {
+        return $this->statement->fetch();
+    }
+
+    public function findOrFail()
+    {
+        $result = $this->find();
+
+        if(!$result) {
+            abort();
+        }
+
+        return $result;
     }
 }
