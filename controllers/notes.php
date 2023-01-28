@@ -1,5 +1,5 @@
 <?php
-
+//curl -X POST http://localhost:8888/notes/create -d 'body=' test on terminal
 $config = require('config.php');
 $db = new Database($config['database']);
 
